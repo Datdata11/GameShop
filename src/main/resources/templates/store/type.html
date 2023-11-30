@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::title}, ~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>[[${type}]]</title>
+</head>
+
+<body>
+	<div class="container mt-5" ng-controller="search-ctrl">
+		<div class="row">
+			<aside class="col-3">
+				<div th:insert="~{/layout/_filter :: filter}"></div>
+			</aside>
+			<article class="col-9">
+				<div>
+					<h4 class="text-danger mb-3 text-center">[[${#strings.toUpperCase(type)}]]</h4>
+					<div class="row mt-3">
+						<div class="col-md-3" th:each="p : ${products}" th:object="${p}">
+							<div class="d-grid">
+								<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+									<img class="img-thumbnail mx-auto" th:src="@{|/assets/images/*{images[0].name}|}"
+										alt="">
+								</a>
+							</div>
+							<div class="text-center">
+								<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+									[[*{name}]] <br>
+									[[*{id}]]</a>
+								<br>
+								<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span> đ
+							</div>
+						</div>
+					</div>
+					<div class="m-3 d-flex gap-2 justify-content-center" th:with="p = ${page}, m = ${maxPage}">
+						<a class="btn btn-secondary" role="button" href="?page=0"> <i
+								class="bi bi-chevron-bar-left"></i>
+						</a> <a class="btn btn-secondary ${p < 1 ? 'disabled' : ''}" role="button"
+							th:href="@{|?page=${p-1}|}"> <i class="bi bi-chevron-double-left"></i>
+						</a> <button class="btn btn-success" th:text="${(p + 1) + ' / ' + (maxPage + 1)}"></button><a
+							class="btn btn-secondary ${p > maxPage -1 ? 'disabled' : ''}" role="button"
+							th:href="@{|?page=${p+1}|}">
+							<i class="bi bi-chevron-double-right"></i>
+						</a> <a class="btn btn-secondary" role="button" th:href="@{|?page=${m}|}">
+							<i class="bi bi-chevron-bar-right"></i>
+						</a>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+
+</body>
+
+</html>

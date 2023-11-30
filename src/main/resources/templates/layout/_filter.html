@@ -1,0 +1,32 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="filter">
+    <h4 class="text-success">BỘ LỌC SẢN PHẨM</h4>
+    <div class="m-3">
+        <b>Danh mục:</b>
+        <div th:each="type : ${types}">
+            <label><input type="checkbox" class="me-3" th:value="${type}">[[${type}]]</label>
+        </div>
+        
+    </div>
+    <div class="m-3">
+        <b>Khoảng giá:</b>
+        <div>
+            <label><input type="checkbox" class="me-3"> < 500,000</label>
+            <label><input type="checkbox" class="me-3">500,000 - 1,000,000</label>
+            <label><input type="checkbox" class="me-3"> > 1,000,000</label>
+        </div>
+        
+    </div>
+    <div class="m-3">
+        <b>Phong cách sản phẩm:</b>
+        <div>
+            <label><input type="checkbox" class="me-3" >Tạo cảm giác sexy quyến rũ</label>
+            <label><input type="checkbox" class="me-3" >Tạo cảm giác tiểu thư, sang trọng</label>
+            <label><input type="checkbox" class="me-3" >Tạo cảm giác thanh lịch, nhẹ nhàng</label>
+            <label><input type="checkbox" class="me-3" >Tạo cảm giác năng động, tươi vui</label>
+            <label><input type="checkbox" class="me-3" >Tạo cảm giác sang trọng, quý phái</label>
+            <label><input type="checkbox" class="me-3" >Tạo cảm giác cổ điển</label>
+            <label><input type="checkbox" class="me-3" >Tạo cảm giác thoải mái, nhẹ nhàng</label>
+        </div>
+        
+    </div>
+</div>

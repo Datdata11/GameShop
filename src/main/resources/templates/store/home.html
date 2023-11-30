@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::title}, ~{::body})}">
+
+<head>
+	<base href="/">
+	<meta charset="UTF-8">
+	<title>Elise</title>
+</head>
+
+<body>
+	<div class="container" ng-controller="home-ctrl">
+		<!-- Banner slide -->
+		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="https://cdn.lep.vn/2022/10/images/banners/1669012108849-1667911933660-p.jpeg"
+						class="d-block w-100" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="https://cdn.lep.vn/2022/10/images/banners/1669012126430-1667911961628-COVER---PC-1.jpeg"
+						class="d-block w-100" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="https://cdn.lep.vn/2022/10/images/banners/1669012145337-cover-pc-(2).jpeg"
+						class="d-block w-100" alt="...">
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+				data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+				data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+
+		<!-- New arrival -->
+		<div class="mt-5" id="new-area">
+			<h2 class="text-center text-danger">NEW ARRIVALS</h2>
+			<div class="d-flex justify-content-center">
+				<a href="/elise/new-arrival"><button class="btn btn-dark">Shop now</button></a>
+			</div>
+			<div class="row mt-3">
+				<div class="col-md-3" th:each="p : ${newProducts}" th:object="${p}">
+					<div class="d-grid">
+						<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+							<img class="img-thumbnail mx-auto" th:src="@{|/assets/images/*{images[0].name}|}" alt="">
+						</a>
+					</div>
+					<div class="text-center">
+						<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+							[[*{name}]] <br>
+							[[*{id}]]</a>
+						<br>
+						<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span> đ
+					</div>
+				</div>
+			</div>
+
+			<!-- pagination -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center mt-3">
+					<li class="page-item"><a ng-click="page=0" class="page-link text-success" href="?new=0">1</a></li>
+					<li class="page-item"><a ng-click="page=2" class="page-link text-success" href="?new=1">2</a></li>
+					<li class="page-item"><a ng-click="page=4" class="page-link text-success" href="?new=2">3</a></li>
+				</ul>
+			</nav>
+		</div>
+
+
+
+		<!-- Banner -->
+		<div class="row mt-5 bg-dark" th:object="${newCollection}">
+			<div class="col-md-8">
+				<img class="w-100" th:src="@{|/assets/banners/*{banners[0].name}|}" alt="">
+			</div>
+			<div class="col-md-4 bg-dark text-white my-auto text-center py-3">
+				<h3 th:text="*{#strings.toUpperCase(name)}"></h3>
+				<h6 class="my-4">NEW COLLECTION [[*{#dates.format(createDate, 'yyyy')}]]</h6>
+				<a th:href="@{|/elise/collection/*{id}|}"><button class="btn btn-light btn-lg rounded-0">VIEW ALL</button></a>
+			</div>
+		</div>
+
+		<!-- Best seller -->
+		<div class="mt-5">
+			<h2 class="text-center text-danger">BEST SELLER</h2>
+			<div class="d-flex justify-content-center">
+				<a href="#!tag/hot"><button class="btn btn-dark">Shop now</button></a>
+			</div>
+			<div class="row mt-3">
+				<div class="col-md-3" th:each="p : ${hotProducts}" th:object="${p}">
+					<div class="d-grid">
+						<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+							<img class="img-thumbnail mx-auto" th:src="@{|/assets/images/*{images[0].name}|}" alt="">
+						</a>
+					</div>
+					<div class="text-center">
+						<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+							[[*{name}]] <br>
+							[[*{id}]]</a>
+						<br>
+						<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span> đ
+					</div>
+				</div>
+			</div>
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center mt-3">
+					<li class="page-item"><a ng-click="page2=0" class="page-link text-success" href="">1</a></li>
+					<li class="page-item"><a ng-click="page2=2" class="page-link text-success" href="">2</a></li>
+					<li class="page-item"><a ng-click="page2=4" class="page-link text-success" href="">3</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</body>
+
+</html>

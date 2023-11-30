@@ -1,0 +1,108 @@
+<div ng-controller="ord-ctrl" class="mx-auto">
+	<h4 class="mb-3 text-center text-primary">ORDER MANAGEMENT</h4>
+	<div class="row ms-5 px-auto">
+		<div class="col-md-6 mb-3">
+			<div class="mb-3 row">
+				<div class="form-group col-6">
+					<label class="form-label">Customer:</label>
+					<input class="form-control" ng-model="ordForm.account.fullname" type="text" />
+				</div>
+				<div class="form-group col-6">
+					<label class="form-label">Order date:</label>
+					<input class="form-control" ng-model="ordForm.orderDate" type="date" disabled />
+				</div>
+			</div>
+			<div class="form-group mb-3">
+				<label class="form-label">Phone:</label>
+				<input class="form-control" ng-model="ordForm.account.phone" type="text" />
+			</div>
+			<div class="form-group mb-3">
+				<label class="form-label">Address:</label>
+				<textarea class="form-control" ng-model="ordForm.account.address" type="text"></textarea>
+			</div>
+			<div class="mb-3 row">
+				<div class="form-group col-6">
+					<label class="form-label">Status:</label>
+					<select class="form-control" ng-model="ordForm.status">
+						<option ng-repeat="s in statusMap" ng-value="s.key">{{s.value}}</option>
+					</select>
+				</div>
+				<div class="form-group col-6">
+					<label class="form-label">Payment:</label>
+					<select class="form-control" ng-model="ordForm.payment">
+						<option value="COD">Tiền mặt</option>
+						<option value="E-WALLET">Ví điện tử</option>
+					</select>
+				</div>
+			</div>
+			<div class="mb-3 row">
+				<div class="form-group col-6">
+					<label class="form-label">Total quantity:</label>
+					<input class="form-control" ng-value="totalQty(ordForm)" type="text" disabled />
+				</div>
+				<div class="form-group col-6">
+					<label class="form-label">Total amount:</label>
+					<input class="form-control" ng-value="totalAmount(ordForm)" type="text" disabled />
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 mb-3">
+			<div class="card">
+				<div class="card-header text-center fw-bold">
+					Order details
+				</div>
+				<div class="card-body">
+					<table class="table">
+						<tr ng-repeat="detail in ordForm.details">
+							<td>{{detail.product.name}}</td>
+							<td><input style="max-width: 60px;;" type="number" ng-model="detail.quantity" step="1" /></td>
+							<td><a role="button" ng-click="deleteDetail(detail)"><i
+										class="bi bi-x-circle text-danger"></i></a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex justify-content-center gap-3">
+		<button ng-click="update()" class="btn btn-secondary">Update</button>
+		<button ng-click="delete(ordForm)" class="btn btn-danger">Delete</button>
+		<button ng-click="reset()" class="btn btn-warning">Reset</button>
+	</div>
+	<table class="table table-primary table-striped m-5 text-center">
+		<thead>
+			<tr class="">
+				<th>Id</th>
+				<th>Username</th>
+				<th>Phone</th>
+				<th>Status</th>
+				<th>Total quantity</th>
+				<th>Total amount</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="order in pager.orders">
+				<td>{{order.id}}</td>
+				<td>{{order.account.username}}</td>
+				<td>{{order.account.phone}}</td>
+				<td>{{order.status}}</td>
+				<td>{{totalQty(order)}}</td>
+				<td>{{totalAmount(order)}}</td>
+				<td><a role="button" ng-click="edit(order)"><i class="bi bi-pencil text-success me-2"></i></a> <a
+						role="button" ng-click="delete(order)"><i class="bi bi-trash3 text-danger"></i></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="m-3 d-flex gap-2 justify-content-center">
+		<a class="btn btn-secondary" role="button" ng-click="pager.first()"> <i class="bi bi-chevron-bar-left"></i>
+		</a> <a class="btn btn-secondary" role="button" ng-click="pager.prev()"> <i
+				class="bi bi-chevron-double-left"></i>
+		</a> <button class="btn btn-success" ng-bind="(pager.page + 1) +' / ' + pager.count"></button><a
+			class="btn btn-secondary" role="button" ng-click="pager.next()"> <i class="bi bi-chevron-double-right"></i>
+		</a> <a class="btn btn-secondary" role="button" ng-click="pager.last()">
+			<i class="bi bi-chevron-bar-right"></i>
+		</a>
+	</div>
+</div>

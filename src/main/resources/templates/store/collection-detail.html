@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::title}, ~{::body})}">
+
+<head>
+	<base href="/">
+	<meta charset="UTF-8">
+	<title>[[${collection.name}]]</title>
+</head>
+
+<body>
+	<div class="container mt-3" th:object="${collection}">
+		<!-- Breadcrumb -->
+		<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a th:href="@{/elise}" class="text-success">Home</a></li>
+				<li class="breadcrumb-item"><a th:href="@{/elise/collection}" class="text-success">Collection</a></li>
+				<li class="breadcrumb-item active" aria-current="page">[[*{name}]]</li>
+			</ol>
+		</nav>
+		<div class="mt-5">
+			<img class="w-100" th:src="@{|/assets/banners/*{banners[0].name}|}" alt="">
+		</div>
+		<div class="mt-5">
+			<img class="w-100" th:src="@{|/assets/banners/*{banners[1].name}|}" alt="">
+		</div>
+		<div class="d-flex justify-content-center mt-5">
+			<a data-bs-toggle="modal" href="#showAllToggle"><button class="btn btn-dark">Show all</button></a>
+		</div>
+		<div class="row mt-3">
+			<div class="col-md-3" th:each="p : ${someProducts}" th:object="${p}">
+				<div class="d-grid">
+					<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+						<img class="img-thumbnail mx-auto" th:src="@{|/assets/images/*{images[0].name}|}" alt="">
+					</a>
+				</div>
+				<div class="text-center">
+					<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+						[[*{name}]] <br>
+						[[*{id}]]</a>
+					<br>
+					<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span> đ
+				</div>
+			</div>
+		</div>
+		<div class="mt-5">
+			<img class="w-100" th:src="@{|/assets/banners/*{banners[2].name}|}" alt="">
+		</div>
+
+		<!-- modal -->
+		<div class="modal fade" id="showAllToggle" aria-hidden="true" aria-labelledby="showAllToggleLabel"
+			tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered modal-xl">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-3 mb-3" th:each="p : ${allProducts}" th:object="${p}">
+								<div class="d-grid">
+									<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+										<img class="img-thumbnail mx-auto"
+											th:src="@{|/assets/images/*{images[0].name}|}" alt="">
+									</a>
+								</div>
+								<div class="text-center">
+									<a th:href="@{|/elise/item/*{id}|}" class="text-success text-decoration-none">
+										[[*{name}]] <br>
+										[[*{id}]]</a>
+									<br>
+									<span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span> đ
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::title}, ~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+</head>
+
+<body>
+	<div class="container mt-5" style="min-height: 450px;">
+		<div class="row my-auto">
+			<div class="col-md-11 mt-60 mx-md-auto">
+				<div class="login-box bg-white pl-lg-5 pl-0">
+					<div class="row no-gutters align-items-center">
+						<div class="col-md-6">
+							<div class="form-wrap bg-white">
+								<h4 class="btm-sep mb-5 text-center text-success fw-bold">Đăng nhập</h4>
+								<form class="form" method="post" action="/login">
+									<div class="row">
+										<div class="col-12 m-auto d-block px-3">
+											<div th:if="${message}" th:text="${message}"
+												class="alert alert-warning my-3"></div>
+										</div>
+										<div class="col-12 mb-3">
+											<div class="form-group position-relative">
+												<span class="zmdi zmdi-account"></span>
+												<input type="text" name="username" class="form-control"
+													placeholder="Tên đăng nhập">
+											</div>
+										</div>
+										<div class="col-12 mb-3">
+											<div class="form-group position-relative">
+												<span class="zmdi zmdi-key"></span>
+												<input type="password" name="password" class="form-control"
+													placeholder="Mật khẩu">
+											</div>
+										</div>
+										<div class="col-12 text-lg-right mb-3 d-flex justify-content-between">
+											<div class="form-check"><label for="chkRemember" class="form-check-labe"><input
+														class="form-check-input" type="checkbox" id="chkRemember"
+														name="remember">Ghi nhớ tài
+													khoản?</label></div>
+											<div><a href="/elise/forgot-password" class="text-success">Quên mật khẩu?</a></div>
+										</div>
+										<div class="col-12 mt-30 d-flex justify-content-center">
+											<div class="mx-auto">
+												<button type="submit" class="btn btn-custom btn-success btn-block">Đăng
+													nhập
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="content text-center my-auto">
+								<div class="border-bottom pb-4">
+									<h3 class="text-success fw-bold">Chưa có tài khoản?</h3>
+									<a href="/elise/signin" class="btn btn-outline-success">Đăng ký</a>
+								</div>
+								<h5 class="text-success fw-bold mb-4 mt-4">Hoặc đăng nhập bằng</h5>
+								<div class="socials">
+									<a href="/elise/oauth2/authorization/facebook" class="zmdi zmdi-facebook"></a>
+									<a href="/elise/oauth2/authorization/google" class="zmdi zmdi-google"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

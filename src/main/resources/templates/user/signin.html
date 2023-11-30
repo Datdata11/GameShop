@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::title}, ~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Signin</title>
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="py-2 h-100">
+			<div class="row d-flex align-items-center justify-content-center h-100">
+				<div class="col-md-8 col-lg-8 col-xl-8">
+					<div class="card bg-light" style="border-radius: 1rem;">
+						<div class="card-body p-5 text-center">
+							<form class="row g-3" action="/signin" method="post" th:object="${account}">
+								<h2 class="fw-bold mb-2 text-uppercase text-success">Đăng ký
+								</h2>
+								<div class="m-auto d-block text-center">
+									<div th:if="${message}" th:text="${message}" class="alert alert-warning my-3"></div>
+								</div>
+								<div class="mb-3 col-md-6">
+									<input th:field="*{username}" type="text" class="form-control"
+										placeholder="Tên đăng nhập" />
+								</div>
+								<div class="mb-3 col-md-6">
+									<input th:field="*{password}" type="password" class="form-control"
+										placeholder="Mật khẩu" />
+								</div>
+								<div class="mb-3 col-md-6">
+									<input th:field="*{email}" type="email" class="form-control"
+										placeholder="Email đăng ký" />
+								</div>
+								<div class="mb-3 col-md-6">
+									<input th:field="*{phone}" type="text" class="form-control"
+										placeholder="Số điện thoại" />
+								</div>
+								<div class="mb-3 col-md-6">
+									<input th:field="*{fullname}" type="text" class="form-control"
+										placeholder="Tên khách hàng" />
+								</div>
+								<div class="mb-3 col-md-6">
+									<input th:field="*{address}" type="text" class="form-control"
+										placeholder="Địa chỉ giao hàng" />
+								</div>
+								<div class="d-grid col-6 mx-auto">
+									<button type="submit" class="btn btn-success my-3">Đăng
+										ký</button>
+								</div>
+							</form>
+
+							<div>
+								<p class="mb-0">
+									Đã có tài khoản <a href="/elise/signin" class="fw-bold">Đăng nhập</a>
+								</p>
+							</div>
+							<h5 class="text-success fw-bold mb-4 mt-4">Hoặc đăng nhập bằng</h5>
+							<div class="socials">
+								<a href="/elise/oauth2/authorization/facebook" class="zmdi zmdi-facebook"></a>
+								<a href="/elise/oauth2/authorization/google" class="zmdi zmdi-google"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

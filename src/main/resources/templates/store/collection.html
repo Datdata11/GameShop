@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout :: dynamic(~{::title}, ~{::body})}">
+
+<head>
+	<base href="/">
+	<meta charset="UTF-8">
+	<title>Collections</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row mt-5 bg-dark" th:each="c : ${collections}" th:object="${c}">
+			<div class="col-md-8">
+				<img class="w-100" th:src="@{|/assets/banners/*{banners[0].name}|}" alt="">
+			</div>
+			<div class="col-md-4 bg-dark text-white my-auto text-center py-3">
+				<h3 th:text="*{#strings.toUpperCase(name)}"></h3>
+				<h6 class="my-4">NEW COLLECTION [[*{#dates.format(createDate, 'yyyy')}]]</h6>
+				<a th:href="@{|/elise/collection/*{id}|}"><button class="btn btn-light btn-lg rounded-0">VIEW ALL</button></a>
+			</div>
+		</div>
+		<div class="m-5 d-flex gap-2 justify-content-center" th:with="p = ${page}, m = ${maxPage}">
+			<a class="btn btn-secondary" role="button" href="?page=0"> <i class="bi bi-chevron-bar-left"></i>
+			</a> <a class="btn btn-secondary ${p < 1 ? 'disabled' : ''}" role="button" th:href="@{|?page=${p-1}|}"> <i
+					class="bi bi-chevron-double-left"></i>
+			</a> <button class="btn btn-success" th:text="${(p + 1) + ' / ' + (maxPage + 1)}"></button><a
+				class="btn btn-secondary ${p > maxPage -1 ? 'disabled' : ''}" role="button" th:href="@{|?page=${p+1}|}">
+				<i class="bi bi-chevron-double-right"></i>
+			</a> <a class="btn btn-secondary" role="button" th:href="@{|?page=${m}|}">
+				<i class="bi bi-chevron-bar-right"></i>
+			</a>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>

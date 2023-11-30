@@ -1,0 +1,76 @@
+<div ng-controller="clt-ctrl">
+	<div class="w-50 mx-auto">
+		<h4 class="mb-3 text-center text-primary">COLLECTION MANAGEMENT</h4>
+		<div class="form-group mb-3">
+			<label class="form-label">Collection id:</label>
+			<input class="form-control" ng-model="cltForm.id" type="text" />
+		</div>
+		<div class="form-group mb-3">
+			<label class="form-label">Collection name:</label>
+			<input class="form-control" ng-model="cltForm.name" type="text" />
+		</div>
+		<div class="form-group mb-3">
+			<label class="form-label">Created date:</label>
+			<input class="form-control" ng-model="cltForm.createDate" type="date" />
+		</div>
+		<div class="form-group mb-3">
+			<label class="form-label">Banners:</label>
+			<div class="mb-3"><input class="form-control" type="file" accept="image/*"
+					onchange="angular.element(this).scope().imageChange(this.files, 0)" /></div>
+			<div class="mb-3"><input class="form-control" type="file" accept="image/*"
+					onchange="angular.element(this).scope().imageChange(this.files, 1)" /></div>
+			<div class="mb-3"><input class="form-control" type="file" accept="image/*"
+					onchange="angular.element(this).scope().imageChange(this.files, 2)" /></div>
+		</div>
+		<div class="row align-items-center">
+			<div class="col-md-4 p-3">
+				<label for="image1">
+					<img class="w-100" ng-src="/assets/banners/{{cltForm.banners[0].name}}" alt=""></label>
+			</div>
+			<div class="col-md-4 p-3">
+				<label for="image2">
+					<img class="w-100" ng-src="/assets/banners/{{cltForm.banners[1].name}}" alt=""></label>
+			</div>
+			<div class="col-md-4 p-3">
+				<label for="image3">
+					<img class="w-100" ng-src="/assets/banners/{{cltForm.banners[2].name}}" alt=""></label>
+			</div>
+		</div>
+		<div class="d-flex justify-content-center gap-3">
+			<button ng-click="create()" class="btn btn-primary">Create</button>
+			<button ng-click="update()" class="btn btn-secondary">Update</button>
+			<button ng-click="delete(cltForm)" class="btn btn-danger">Delete</button>
+			<button ng-click="reset()" class="btn btn-warning">Reset</button>
+		</div>
+	</div>
+	<table class="table table-primary table-striped m-5 text-center">
+		<thead>
+			<tr class="">
+				<th>ID</th>
+				<th>Name</th>
+				<th>Create Date</th>
+				<th>Banners</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in pager.collections">
+				<td>{{item.id}}</td>
+				<td>{{item.name}}</td>
+				<td>{{item.createDate | date: 'dd/MM/yyyy'}}</td>
+				<td>{{toString(item.banners)}}</td>
+				<td><a role="button" ng-click="edit(item)"><i class="bi bi-pencil text-success me-2"></i></a> <a
+						role="button" ng-click="delete(item)"><i class="bi bi-trash3 text-danger"></i></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="m-3 d-flex gap-2 justify-content-center">
+		<a class="btn btn-secondary" role="button" ng-click="pager.first()"> <i class="bi bi-chevron-bar-left"></i>
+		</a> <a class="btn btn-secondary" role="button" ng-click="pager.prev()"> <i class="bi bi-chevron-double-left"></i>
+		</a> <button class="btn btn-success" ng-bind="(pager.page + 1) +' / ' + pager.count"></button><a class="btn btn-secondary"
+			role="button" ng-click="pager.next()"> <i class="bi bi-chevron-double-right"></i>
+		</a> <a class="btn btn-secondary" role="button" ng-click="pager.last()">
+			<i class="bi bi-chevron-bar-right"></i>
+		</a>
+	</div>
+</div>

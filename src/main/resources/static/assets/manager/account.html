@@ -1,0 +1,81 @@
+<div ng-controller="acc-ctrl" class="mx-auto">
+	<div class="w-50 mx-auto">
+		<h4 class="mb-3 text-center text-primary">USER MANAGEMENT</h4>
+		<div class="mb-3 row">
+			<div class="form-group col-6">
+				<label class="form-label">Username:</label>
+				<input class="form-control" ng-model="accForm.username" type="text" />
+			</div>
+			<div class="form-group col-6">
+				<label class="form-label">Fullname:</label>
+				<input class="form-control" ng-model="accForm.fullname" type="text" />
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<div class="form-group col-6">
+				<label class="form-label">Password:</label>
+				<input class="form-control" ng-model="accForm.password" type="password" />
+			</div>
+			<div class="form-group col-6">
+				<label class="form-label">Phone:</label>
+				<input class="form-control" ng-model="accForm.phone" type="text" />
+			</div>
+		</div>
+		<div class="form-group mb-3">
+			<label class="form-label">Email:</label>
+			<input class="form-control" ng-model="accForm.email" type="email" />
+		</div>
+		<div class="form-group mb-3">
+			<label class="form-label">Address:</label>
+			<textarea class="form-control" ng-model="accForm.address" type="text"></textarea>
+		</div>
+		<div class="form-group mb-3">
+			<label class="form-label">Role:</label>
+			<div class="d-flex gap-4 form-check">
+				<label class="radio-inline me-5"><input type="radio" ng-model="accForm.role" ng-value="true"
+						class="form-check-input" />Staff</label>
+				<label class="radio-inline"><input type="radio" ng-model="accForm.role" ng-value="false"
+						class="form-check-input" />Customer</label>
+			</div>
+		</div>
+		<div class="d-flex justify-content-center gap-3">
+			<button ng-click="create()" class="btn btn-primary">Create</button>
+			<button ng-click="update()" class="btn btn-secondary">Update</button>
+			<button ng-click="delete(accForm)" class="btn btn-danger">Delete</button>
+			<button ng-click="reset()" class="btn btn-warning">Reset</button>
+		</div>
+	</div>
+	<table class="table table-primary table-striped m-5 text-center">
+		<thead>
+			<tr class="">
+				<th>Username</th>
+				<th>Fullname</th>
+				<th>Phone</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="acc in pager.accounts">
+				<td>{{acc.username}}</td>
+				<td>{{acc.fullname}}</td>
+				<td>{{acc.phone}}</td>
+				<td>{{acc.email}}</td>
+				<td>{{acc.role ? 'Staff' : 'Customer'}}</td>
+				<td><a role="button" ng-click="edit(acc)"><i class="bi bi-pencil text-success me-2"></i></a> <a
+						role="button" ng-click="delete(acc)"><i class="bi bi-trash3 text-danger"></i></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="m-3 d-flex gap-2 justify-content-center">
+		<a class="btn btn-secondary" role="button" ng-click="pager.first()"> <i class="bi bi-chevron-bar-left"></i>
+		</a> <a class="btn btn-secondary" role="button" ng-click="pager.prev()"> <i
+				class="bi bi-chevron-double-left"></i>
+		</a> <button class="btn btn-success" ng-bind="(pager.page + 1) +' / ' + pager.count"></button><a
+			class="btn btn-secondary" role="button" ng-click="pager.next()"> <i class="bi bi-chevron-double-right"></i>
+		</a> <a class="btn btn-secondary" role="button" ng-click="pager.last()">
+			<i class="bi bi-chevron-bar-right"></i>
+		</a>
+	</div>
+</div>
