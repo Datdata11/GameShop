@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.entity.Account;
 import com.poly.entity.CustomerReport;
 import com.poly.entity.Order;
+import com.poly.entity.ProductReport;
 
 public interface OrderService {
 
@@ -22,6 +23,8 @@ public interface OrderService {
 	List<Order> findByAccount(Account logAcc);
 
 	Order create(JsonNode orderData);
+
+	List<ProductReport> findSoldProduct();
 
 	
 

@@ -9,17 +9,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("serial")
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerReport {
+public class ProductReport implements Serializable {
 	@Id
-	private Serializable username;
-	private String email;
-	private String phone;
-	private Long count; // tổng lượt mua
-	private Double total; // tổng số tiền đã tiêu
+	private String id;
+	private String name;
+	private Double price;
+	private Long totalQty;
 	private Integer month;
 	private Integer year;
 }

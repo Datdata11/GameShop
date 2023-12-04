@@ -9,7 +9,7 @@ public interface AuthorityService {
 	
 	List<Authority> findByAccount(Account account);
 
-	Authority create(String username, String role);
+	Authority create(Account acc, String role);
 
 	List<Authority> findAll();
 

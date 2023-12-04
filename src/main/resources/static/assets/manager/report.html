@@ -1,4 +1,4 @@
-<div ng-controller="rpt-ctrl">
+<div ng-controller="rpt-ctrl" class="mt-5 mx-auto px-3">
 	<h4 class="mb-3 text-center text-primary">REPORTS</h4>
 	<div class="mt-5">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -15,10 +15,14 @@
 
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="productTab" role="tabpanel" aria-labelledby="home-tab">
-				<div class="my-3">
-					<button class="btn btn-success">Export to Excel</button>
+				<div class="my-3 d-flex justify-content-between">
+					<div>
+						<b class="me-2">Filter:</b>
+						<input type="month" ng-model="selectedMonth" min="2023-01" ng-value="thisMonth" ng-change="change_month_product()">
+					</div>
+					<button class="btn btn-success" ng-click="exportToExcel('tblProductReport')">Export to Excel</button>
 				</div>
-				<table class="mt-3 table table-striped table-hover table-bordered text-center">
+				<table id="tblProductReport" class="mt-3 table table-striped table-hover table-bordered text-center">
 					<thead class="bg-success text-white">
 						<tr>
 							<th scope="col">ID</th>
@@ -28,40 +32,44 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="item in soldProducts">
+						<tr ng-repeat="item in monthFilterProducts track by $index">
 							<td>{{item.id}}</td>
 							<td>{{item.name}}</td>
-							<td>{{item.totalSold}}</td>
+							<td>{{item.totalQty}}</td>
 							<td class="text-end me-5" ng-bind="soldAmount(item) | currency: '' : '.0'"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="tab-pane fade" id="customerTab" role="tabpanel" aria-labelledby="profile-tab">
-				<div class="my-3">
-					<button class="btn btn-success">Export to Excel</button>
+				<div class="my-3 d-flex justify-content-between">
+					<div>
+						<b class="me-2">Filter:</b>
+						<input type="month" ng-model="selectedMonth2" min="2023-01" ng-value="thisMonth" ng-change="change_month_customer()">
+					</div>
+					<button class="btn btn-success" ng-click="exportToExcel('tblCustomerReport')">Export to Excel</button>
 				</div>
 				<div class="">
-					<table class="mt-3 table table-striped table-hover table-bordered text-center">
-					<thead class="bg-success text-white">
-						<tr>
-							<th scope="col">Username</th>
-							<th scope="col">Email</th>
-							<th scope="col">Phone number</th>
-							<th scope="col">Number of purchases</th>
-							<th scope="col">Total spent</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="item in customers">
-							<td>{{item.username}}</td>
-							<td>{{item.email}}</td>
-							<td>{{item.phone}}</td>
-							<td>{{item.count}}</td>
-							<td class="text-end me-5">{{item.total | currency: '' : '.0'}}</td>
-						</tr>
-					</tbody>
-				</table>
+					<table id="tblCustomerReport" class="mt-3 table table-striped table-hover table-bordered text-center">
+						<thead class="bg-success text-white">
+							<tr>
+								<th scope="col">Username</th>
+								<th scope="col">Email</th>
+								<th scope="col">Phone number</th>
+								<th scope="col">Number of purchases</th>
+								<th scope="col">Total spent</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in monthFilterCustomers track by $index">
+								<td>{{item.username}}</td>
+								<td>{{item.email}}</td>
+								<td>{{item.phone}}</td>
+								<td>{{item.count}}</td>
+								<td class="text-end me-5">{{item.total | currency: '' : '.0'}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

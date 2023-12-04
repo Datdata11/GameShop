@@ -35,4 +35,8 @@ public interface ProductService {
 	List<Product> findByCollection(Collection collection);
 
 	List<Product> findSoldProducts();
+
+	Page<Product> findByKeyword(String keyword, Pageable page);
+
+	List<Product> findByKeyword(String keyword);
 }

@@ -28,28 +28,10 @@ public class AccountController {
 	AccountService accService;
 	@Autowired
 	OrderService orderService;
-	
+
 	@RequestMapping("/elise/account/checkout")
 	public String checkout() {
 		return "user/checkout";
-	}
-
-	@GetMapping("/elise/signin")
-	public String signin(Model model) {
-		Account acc = new Account();
-		model.addAttribute("account", acc);
-		return "user/signin";
-	}
-
-	@PostMapping("/signin")
-	public String signin(Model model, @Validated @ModelAttribute("account") Account account, BindingResult result) {
-		if (result.hasErrors()) {
-			model.addAttribute("message", "Kiểm tra lại thông tin nhập");
-		} else {
-			accService.create(account);
-			model.addAttribute("message", "Đăng ký thành công! Hãy thực hiện đăng nhập");
-		}
-		return "user/signin";
 	}
 
 	@GetMapping("/elise/account/profile")
@@ -72,18 +54,23 @@ public class AccountController {
 
 	@GetMapping("/elise/account/order-history")
 	public String history(Model model) {
-		
-		model.addAttribute("orderHistory", orderService.findByAccount(getLogAcc())); 
+		model.addAttribute("orderHistory", orderService.findByAccount(getLogAcc()));
 		return "user/history";
 	}
-	
+
 	@ModelAttribute("logAcc")
 	public Account getLogAcc() {
 		Account acc = new Account();
 		try {
+			// đăng nhập bằng form
 			acc = accService.findById(request.getRemoteUser());
 		} catch (Exception e) {
-			Map<String , Object> userDetails = ((DefaultOAuth2User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAttributes();
+			// đăng nhập bằng Google
+			acc = accService.findByEmail(request.getRemoteUser());
+		} finally {
+			// đăng nhập bằng Facebook
+			Map<String, Object> userDetails = ((DefaultOAuth2User) SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal()).getAttributes();
 			String email = (String) userDetails.get("email");
 			acc = accService.findByEmail(email);
 		}

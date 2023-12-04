@@ -43,7 +43,7 @@ public class AuthorityRestController {
 
 	@PostMapping()
 	public Authority create(@RequestBody Authority authority) {
-		return authService.create(authority.getAccount().getUsername(), authority.getRole().getId());
+		return authService.create(authority.getAccount(), authority.getRole().getId());
 	}
 
 	@DeleteMapping("/{id}")

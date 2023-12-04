@@ -112,4 +112,14 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findSoldProducts() {
 		return dao.findSoldProducts();
 	}
+
+	@Override
+	public Page<Product> findByKeyword(String keyword, Pageable page) {
+		return dao.findByKeyword(keyword, page);
+	}
+
+	@Override
+	public List<Product> findByKeyword(String keyword) {
+		return dao.findByKeyword(keyword);
+	}
 }

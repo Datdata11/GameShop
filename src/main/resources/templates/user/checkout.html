@@ -11,7 +11,7 @@
 	<div class="container mt-5 mx-auto" style="min-height: 200px;">
 		<h3 class="text-center text-success">THANH TOÁN</h3>
 		<div class="mb-3 mx-auto">
-			<form th:object="${logAcc}">
+			<form th:object="${logAcc}" method="post">
 				<h5 class="mb-3 text-center text-primary">Thông tin khách hàng</h5>
 				<div class="row">
 					<div class="form-group col-6 mb-3">
@@ -68,7 +68,7 @@
 			</div>
 		</div>
 		<div>
-			<a role="button" ng-click="order.purchase()" class="btn btn-success mt-3">Mua hàng</a>									
+			<a role="button" ng-click="order.purchase()" class="btn btn-success mt-3" ng-disabled="cart.count == 0">Mua hàng</a>									
 		</div>
 	</div>
 </body>

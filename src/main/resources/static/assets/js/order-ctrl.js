@@ -27,18 +27,15 @@ app.controller("ord-ctrl", function($scope, $http) {
 	// hủy thay đổi form
 	$scope.reset = function() {
 		var id = $scope.ordForm.id
-		$http.get(`${host}/${id}`).then(resp => {
-			$scope.ordForm = angular.copy(resp.data)
-			console.log("Success", resp)
-		}).catch(error => {
-			console.log("Error", error)
-		})
+		var index = $scope.orders.findIndex(o => o.id == id)
+		$scope.ordForm = angular.copy($scope.orders[index])
 	}
 	// cập nhật
 	$scope.update = function() {
 		var item = angular.copy($scope.ordForm)
+		item.total = $scope.totalAmount(item)
 		$http.put(`${host}/${item.id}`, item).then(resp => {
-			var index = $scope.order.findIndex(o => o.id == item.id)
+			var index = $scope.orders.findIndex(o => o.id == item.id)
 			$scope.orders[index] = item
 			alert("Update success")
 			console.log("Success", resp.data)
@@ -80,7 +77,7 @@ app.controller("ord-ctrl", function($scope, $http) {
 		for(var i = 0; i < length; i++){
 			sum += (item.details[i].quantity * item.details[i].product.price)
 		}
-		return sum
+		return sum >= 1500000 ? sum : (sum + 20000)
 	}
 	// phân trang
 	$scope.pager = {

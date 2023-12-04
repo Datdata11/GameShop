@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.entity.CustomerReport;
-import com.poly.entity.Product;
+import com.poly.entity.ProductReport;
 import com.poly.service.AccountService;
 import com.poly.service.OrderService;
 import com.poly.service.ProductService;
@@ -26,8 +26,8 @@ public class ReportRestController {
 	OrderService orderService;
 	
 	@GetMapping("/sold-products")
-	public List<Product> soldProduct (){
-		return productService.findSoldProducts();
+	public List<ProductReport> soldProduct (){
+		return orderService.findSoldProduct();
 	}
 	
 	@GetMapping("/customers")

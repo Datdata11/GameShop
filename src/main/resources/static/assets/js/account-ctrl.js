@@ -6,9 +6,9 @@ app.controller("acc-ctrl", function($scope, $http, $rootScope) {
 	$scope.initialize = function() {
 		$http.get(host).then(resp => {
 			$scope.accounts = resp.data
-			$scope.accounts.forEach(c => {
-				c.role = false
-			})
+			$scope.accForm = {
+				role: false
+			}
 			console.log("Success", resp)
 		}).catch(error => {
 			console.log("Error", error)

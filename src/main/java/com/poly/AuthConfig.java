@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.poly.service.UserService;
+import com.poly.utils.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -45,14 +45,16 @@ public class AuthConfig {
 			.cors(cors -> cors.disable());
 		// Phân quyền sử dụng
 		http.authorizeRequests(auth -> auth
-				.antMatchers("/elise/rest/authorities", "/elise/rest/authorities/**")
+				.antMatchers("/elise/rest/authorities", "/elise/rest/authorities/**",
+						"/elise/rest/reports/**")
 					.hasRole("MAN")
 				.antMatchers("/elise/rest/accounts", "/elise/rest/accounts/**",
 						"/elise/rest/collections", "/elise/rest/collections/**",
-						"/elise/rest/orders", "/elise/rest/orders/**",
-						"/elise/rest/products", "/elise/rest/products/**",
 						"/elise/rest/upload/**")
 					.hasAnyRole("MAN", "STA")
+				.antMatchers("/elise/account/**",
+						"/elise/rest/orders", "/elise/rest/orders/**")
+					.authenticated()
 				.anyRequest().permitAll() // anonymous
 		);
 

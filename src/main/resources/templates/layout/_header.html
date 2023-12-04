@@ -38,13 +38,15 @@
 					</li>
 				</ul>
 				<div class="d-flex text-success fs-3 justify-content-between align-items-center me-3 gap-3">
-					<div class="input-group align-items-center border border-success rounded-pill">
-						<input ng-model="keyword" type="text" class="form-control border-0 rounded-pill"
-							style="border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important;"
-							placeholder="Tìm kiếm" aria-describedby="button-addon2">
-						<button ng-click="search(keyword)" class="btn" type="button" id="button-addon2"><i
-								class="bi bi-search"></i></button>
-					</div>
+					<form method="get" action="/elise/search">
+						<div class="input-group align-items-center border border-success rounded-pill">
+							<input name="keyword" type="text" class="form-control border-0 rounded-pill"
+								style="border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important;"
+								placeholder="Tìm kiếm" aria-describedby="button-addon2">
+							<button class="btn" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
+
+						</div>
+					</form>
 					<div th:unless="${#request.remoteUser}">
 						<a href="/elise/login" role="button"><i class="bi bi-person-circle text-success"></i></a>
 					</div>
@@ -86,7 +88,7 @@
 								<h3 class="text-success">Giỏ hàng của bạn</h3>
 								<span ng-show="cart.count == 0" class="fst-italic">Không có sản phẩm nào trong giỏ
 									hàng</span>
-								<div ng-repeat="p in cart.items"
+								<div ng-repeat="p in cart.items track by $index"
 									class="d-flex justify-content-between align-items-center my-2">
 									<img class="border rounded" width="100px"
 										ng-src="/assets/images/{{p.images[0].name}}" alt="">
@@ -95,8 +97,8 @@
 										<span class="fst-italic" ng-bind="p.id"></span>
 									</div>
 									<div>
-										<input ng-model="p.quantity" ng-change="cart.saveToLocalStorage()" style="max-width: 50px;"
-											type="number" min="1" step="1">
+										<input ng-model="p.quantity" ng-change="cart.saveToLocalStorage()"
+											style="max-width: 50px;" type="number" min="1" step="1">
 									</div>
 									<div style="font-size: smaller;">
 										<span ng-bind="p.price * p.quantity | currency : '' : '.0'"></span> đ
@@ -134,11 +136,15 @@
 									</tr>
 									<tr class="border-top">
 										<td>Thành tiền:</td>
-										<td ng-bind="cart.amount + cart.delivery | currency: 'đ' : '.0'" class="text-end"></td>
+										<td ng-bind="cart.amount + cart.delivery | currency: 'đ' : '.0'"
+											class="text-end">
+										</td>
 									</tr>
 								</table>
 								<div class="d-grid">
-									<a role="button" th:href="@{/elise/account/checkout}" class="btn btn-success mt-3">Thanh toán</a>
+									<a role="button" th:href="@{/elise/account/checkout}"
+										class="btn btn-success mt-3">Thanh
+										toán</a>
 									<button class="btn btn-secondary mt-3" data-bs-dismiss="modal">Quay lại</button>
 								</div>
 							</div>

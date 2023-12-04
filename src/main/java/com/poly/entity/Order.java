@@ -34,6 +34,7 @@ public class Order implements Serializable {
 	private Account account;
 	private String status;
 	private String payment; 
+	private Double total;
 //	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> details;

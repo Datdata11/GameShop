@@ -5,22 +5,22 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.poly.entity.Account;
 import com.poly.entity.Collection;
 import com.poly.entity.Product;
 import com.poly.service.AccountService;
 import com.poly.service.CollectionService;
-import com.poly.service.CookieService;
-import com.poly.service.ParamService;
 import com.poly.service.ProductService;
-import com.poly.service.SessionService;
+import com.poly.utils.service.CookieService;
+import com.poly.utils.service.ParamService;
+import com.poly.utils.service.SessionService;
 
 @Controller
 public class StoreController {
@@ -74,6 +74,19 @@ public class StoreController {
 		
 		return "store/best-seller";
 	}
+	
+	@GetMapping("/elise/search")
+	public String search(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("keyword") String keyword) throws Exception {
+		model.addAttribute("keyword", keyword);
+		return "store/search";
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/elise/search", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Product> search(@RequestParam("keyword") String keyword) throws Exception {
+		List<Product> results = productService.findByKeyword("%" + keyword + "%");
+		return results;
+	}
 
 	@GetMapping("/elise/product/{type}")
 	public String type(Model model, @PathVariable("type") String type, @RequestParam("page") Optional<Integer> page) {
@@ -106,15 +119,5 @@ public class StoreController {
 		model.addAttribute("someProducts", productService.findByCollection(collection, PageRequest.of(0, 4)));
 		model.addAttribute("allProducts", productService.findByCollection(collection));
 		return "store/collection-detail";
-	}
-
-	@ModelAttribute("logAcc")
-	public Account getLogAcc() {
-		return new Account();
-	}
-
-	@ModelAttribute("regAcc")
-	public Account getRegAcc() {
-		return new Account();
 	}
 }

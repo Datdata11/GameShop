@@ -91,8 +91,8 @@
 					<div style="width: 35px; height: 35px;" class="border bg-light text-center py-auto">L</div>
 				</div>
 				<div class="d-flex gap-5 my-5 justify-content-center">
-					<a role="button" class="btn btn-light border-success col-4" th:href="@{/elise/account/checkout}">MUA HÀNG</a>
-					<button class="btn btn-success col-4" th:attr="ng-click='cart.add(\''+${item.id}+'\')'">THÊM VÀO GIỎ
+					<a role="button" class="btn btn-light border-success col-4" th:attr="ng-click=@{|add_and_order('${item.id}')|}">MUA HÀNG</a>
+					<button class="btn btn-success col-4" th:attr="ng-click=@{|cart.add('${item.id}')|}">THÊM VÀO GIỎ
 						HÀNG</button>
 				</div>
 				<div>

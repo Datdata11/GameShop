@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poly.entity.Account;
 import com.poly.entity.Authority;
 import com.poly.repository.AuthorityDAO;
+import com.poly.repository.RoleDAO;
 import com.poly.service.AuthorityService;
 
 
@@ -15,6 +16,8 @@ import com.poly.service.AuthorityService;
 public class AuthorityServiceImpl implements AuthorityService {
 	@Autowired
 	AuthorityDAO dao;
+	@Autowired
+	RoleDAO roleDao;
 
 	@Override
 	public List<Authority> findByAccount(Account account) {
@@ -22,8 +25,11 @@ public class AuthorityServiceImpl implements AuthorityService {
 	}
 
 	@Override
-	public Authority create(String username, String role) {
-		return dao.save(username, role);
+	public Authority create(Account acc, String role) {
+		Authority auth = new Authority();
+		auth.setAccount(acc);
+		auth.setRole(roleDao.findById(role).get());
+		return dao.save(auth);
 	}
 
 	@Override

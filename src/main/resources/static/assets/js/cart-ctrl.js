@@ -1,6 +1,15 @@
 const myApp = angular.module("my-app", []);
+myApp.run(function($http, $rootScope){
+    $http.get(`http://localhost:8080/elise/rest/authentication`).then(resp => {
+    	if(resp.data){
+    		$auth = $rootScope.$auth = resp.data;
+        	$http.defaults.headers.common["Authorization"] = $auth.token;
+    	}
+    });
+})
 myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
-	$scope.cart = {
+
+	var $cart = $scope.cart = {
 		items: [],
 		//thêm sp vào giỏ
 		add(id) {
@@ -9,7 +18,7 @@ myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
 				item.quantity++
 				this.saveToLocalStorage()
 			} else {
-				$http.get(`/elise/rest/products/${id}`).then(resp => {
+				$http.get(`http://localhost:8080/elise/rest/products/${id}`).then(resp => {
 					resp.data.quantity = 1
 					this.items.push(resp.data)
 					this.saveToLocalStorage()
@@ -19,7 +28,7 @@ myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
 		// xóa sp khỏi giỏ
 		remove(id) {
 			var index = this.items.findIndex(item => item.id == id)
-			items.splice(index, 1)
+			this.items.splice(index, 1)
 			this.saveToLocalStorage()
 		},
 		// xóa tất cả sp
@@ -27,8 +36,6 @@ myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
 			this.items = []
 			this.saveToLocalStorage()
 		},
-		// tính thành tiền của 1 sp
-		amount_of(item) { },
 		// tính tổng số lượng các sp trong giỏ
 		get count() {
 			return this.items.map(item => item.quantity).reduce((total, qty) => total += qty, 0)
@@ -54,5 +61,39 @@ myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
 
 	$scope.cart.loadFromLocalStorage()
 
+	$scope.order = {
+		orderDate: new Date(),
+		status: "queueing",
+		payment: "COD",
+		total: $cart.amount + $cart.delivery,
+		get account() {
+			return { username: $rootScope.$auth.account.username }
+		},
+		get details() {
+			return $cart.items.map(item => {
+				return {
+					product: { id: item.id },
+					quantity: item.quantity
+				}
+			})
+		},
+		purchase() {
+			var order = angular.copy(this)
 
+			$http.post("http://localhost:8080/elise/rest/orders", order).then(resp => {
+				alert("Đặt hàng thành công")
+				$cart.clear()
+				location.href = "http://localhost:8080/elise/account/order-history"
+				console.log(resp)
+			}).catch(error => {
+				alert("Đặt hàng lỗi")
+				console.log(error)
+			})
+		}
+	}
+		
+	$scope.add_and_order = function(id){
+		$cart.add(id)
+		location.href = "http://localhost:8080/elise/account/checkout"
+	}
 })
