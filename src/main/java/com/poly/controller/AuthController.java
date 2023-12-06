@@ -57,20 +57,21 @@ public class AuthController {
 			}
 		} catch (Exception e) {
 			model.addAttribute("message", "Tên đăng nhập hoặc email không chính xác");
+			return "user/forgot-password";
 		}
 		try {
 			MailInfo mail = new MailInfo();
 			mail.setTo(email);
 			mail.setSubject("<Elise> Email nhận lại mật khẩu");
-			String str = "<div>\r\n"
-					+ "        Thân gửi " + username + ",\r\n"
-					+ "        Elise Shop xin gửi bạn mật khẩu đăng nhập tài khoản:\r\n"
-					+ "        <ul>\r\n"
-					+ "            <li>Tên đăng nhập: " + username + "</li>\r\n"
-					+ "            <li>Mật khẩu: <span style=\"color: red;\">" + data.getPassword() + "</span></li>\r\n"
-					+ "        </ul>\r\n"
-					+ "        Mật khẩu có khả năng bị tiết lộ, bạn nên thực hiện thay đổi mật khẩu sau khi đăng nhập.\r\n"
-					+ "        <br><i>Lưu ý : Đây là email tự động vui lòng không phản hồi email này.</i>\r\n"
+			String str = "<div>"
+					+ "        Thân gửi " + username + ",<br>"
+					+ "        Elise Shop xin gửi bạn mật khẩu đăng nhập tài khoản:"
+					+ "        <ul>"
+					+ "            <li>Tên đăng nhập: " + username + "</li>"
+					+ "            <li>Mật khẩu: <span style=\"color: red;\">" + data.getPassword() + "</span></li>"
+					+ "        </ul>"
+					+ "        Mật khẩu có khả năng bị tiết lộ, bạn nên thực hiện thay đổi mật khẩu sau khi đăng nhập."
+					+ "        <br><i>Lưu ý : Đây là email tự động vui lòng không phản hồi email này.</i>"
 					+ "    </div>";
 			mail.setBody(str);
 			mailService.queue(mail);

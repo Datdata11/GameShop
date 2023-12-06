@@ -3,6 +3,10 @@
 .w-80 {
 	width: 80%;
 }
+
+.w-60 {
+	width: 60%;
+}
 /*
 body {
 	background-image: -webkit-gradient(linear, left top, right top, from(#3CB371), to(#90EE90)) !important;

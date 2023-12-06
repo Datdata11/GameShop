@@ -30,8 +30,14 @@ public class AccountController {
 	OrderService orderService;
 
 	@RequestMapping("/elise/account/checkout")
-	public String checkout() {
+	public String checkout(Model model) {
+		model.addAttribute("logAcc", getLogAcc());
 		return "user/checkout";
+	}
+	
+	@GetMapping("/elise/account/checkout/update")
+	public String updateProfile() {
+		return "redirect:/elise/account/profile";
 	}
 
 	@GetMapping("/elise/account/profile")
@@ -57,22 +63,49 @@ public class AccountController {
 		model.addAttribute("orderHistory", orderService.findByAccount(getLogAcc()));
 		return "user/history";
 	}
+	
+	@GetMapping("/elise/account/change-password")
+	public String changePassword() {
+		return "user/change-password";
+	}
+	
+	@PostMapping("/elise/account/change-password")
+	public String changePassword(Model model) {
+		String password = request.getParameter("password");
+		String newPassword = request.getParameter("newPassword");
+		String confirmPassword = request.getParameter("confirmPassword");
+		System.out.println(password + newPassword + confirmPassword);
+		if (!newPassword.equals(confirmPassword)) {
+			model.addAttribute("message", "Xác nhận mật khẩu không giống mật khẩu mới");
+			return "user/change-password";
+		}
+		Account acc = getLogAcc();
+		if (!password.equals(acc.getPassword())) {
+			model.addAttribute("message", "Mật khẩu hiện tại không chính xác");
+			return "user/change-password";
+		}
+		acc.setPassword(newPassword);
+		accService.update(acc);
+		model.addAttribute("message", "Thay đổi mật khẩu thành công");
+		return "user/change-password";
+	}
 
-	@ModelAttribute("logAcc")
 	public Account getLogAcc() {
 		Account acc = new Account();
 		try {
-			// đăng nhập bằng form
+			// đăng nhập bằng form, không tìm thấy sẽ xảy ra ngoại lệ
 			acc = accService.findById(request.getRemoteUser());
 		} catch (Exception e) {
-			// đăng nhập bằng Google
-			acc = accService.findByEmail(request.getRemoteUser());
-		} finally {
-			// đăng nhập bằng Facebook
-			Map<String, Object> userDetails = ((DefaultOAuth2User) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal()).getAttributes();
-			String email = (String) userDetails.get("email");
-			acc = accService.findByEmail(email);
+			try {
+				// đăng nhập bằng Google, nếu không tìm thấy thì xảy ra ngoại lệ
+				acc = accService.findByEmail(request.getRemoteUser());
+			} catch (Exception e2) {
+				// đăng nhập bằng Facebook
+				Map<String, Object> userDetails = ((DefaultOAuth2User) SecurityContextHolder.getContext()
+						.getAuthentication().getPrincipal()).getAttributes();
+				String email = (String) userDetails.get("email");
+				acc = accService.findByEmail(email);
+			}
 		}
 		return acc;
 	}

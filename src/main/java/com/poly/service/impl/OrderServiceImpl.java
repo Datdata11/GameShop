@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> findAll() {
-		return dao.findAll();
+		return dao.findAll(Sort.by(Direction.DESC, "id"));
 	}
 
 	@Override

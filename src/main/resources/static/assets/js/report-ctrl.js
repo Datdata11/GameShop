@@ -15,6 +15,7 @@ app.controller("rpt-ctrl", function($scope, $http) {
 				&& item.year == $scope.selectedMonth.getFullYear())
 			console.log("Success", resp.data)
 		}).catch(error => {
+			location.href = "http://localhost:8080/auth/access/denied"
 			console.log("Error", error)
 		})
 		$http.get(`${host}/customers`).then(resp => {
@@ -23,6 +24,7 @@ app.controller("rpt-ctrl", function($scope, $http) {
 				&& item.year == $scope.selectedMonth2.getFullYear())
 			console.log("Success", resp.data)
 		}).catch(error => {
+			location.href = "http://localhost:8080/auth/access/denied"
 			console.log("Error", error)
 		})
 	}

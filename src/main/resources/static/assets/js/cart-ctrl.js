@@ -1,25 +1,27 @@
 const myApp = angular.module("my-app", []);
-myApp.run(function($http, $rootScope){
-    $http.get(`http://localhost:8080/elise/rest/authentication`).then(resp => {
-    	if(resp.data){
-    		$auth = $rootScope.$auth = resp.data;
-        	$http.defaults.headers.common["Authorization"] = $auth.token;
-    	}
-    });
+myApp.run(function($http, $rootScope) {
+	$http.get(`http://localhost:8080/elise/rest/authentication`).then(resp => {
+		if (resp.data) {
+			$auth = $rootScope.$auth = resp.data;
+			$http.defaults.headers.common["Authorization"] = $auth.token;
+		}
+	});
 })
 myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
+	$scope.size = "S"
 
 	var $cart = $scope.cart = {
 		items: [],
 		//thêm sp vào giỏ
 		add(id) {
-			var item = this.items.find(item => item.id == id)
+			var item = this.items.find(item => item.id == id && item.size == $scope.size)
 			if (item) {
 				item.quantity++
 				this.saveToLocalStorage()
 			} else {
 				$http.get(`http://localhost:8080/elise/rest/products/${id}`).then(resp => {
 					resp.data.quantity = 1
+					resp.data.size = $scope.size
 					this.items.push(resp.data)
 					this.saveToLocalStorage()
 				})
@@ -73,7 +75,8 @@ myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
 			return $cart.items.map(item => {
 				return {
 					product: { id: item.id },
-					quantity: item.quantity
+					quantity: item.quantity,
+					size: item.size
 				}
 			})
 		},
@@ -91,8 +94,8 @@ myApp.controller("cart-ctrl", function($scope, $http, $rootScope) {
 			})
 		}
 	}
-		
-	$scope.add_and_order = function(id){
+
+	$scope.add_and_order = function(id) {
 		$cart.add(id)
 		location.href = "http://localhost:8080/elise/account/checkout"
 	}

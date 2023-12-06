@@ -44,7 +44,8 @@
 				</div>
 				<div class="form-group col-6">
 					<label class="form-label">Total amount:</label>
-					<input class="form-control" ng-value="totalAmount(ordForm) | currency: '' : '.0'" type="text" disabled />
+					<input class="form-control" ng-value="totalAmount(ordForm) | currency: '' : '.0'" type="text"
+						disabled />
 				</div>
 			</div>
 			<div class="card">
@@ -54,9 +55,16 @@
 				<div class="card-body">
 					<table class="table">
 						<tr ng-repeat="detail in ordForm.details">
-							<td>{{detail.product.name}}</td>
-							<td><input style="max-width: 60px;;" type="number" ng-model="detail.quantity" step="1" /></td>
-							<td><a role="button" ng-click="deleteDetail(detail)"><i
+							<td class="my-auto">{{detail.product.name}}</td>
+							<td class="my-auto"><select ng-model="detail.size" style="min-width: 50px;">
+									<option value="S">S</option>
+									<option value="M">M</option>
+									<option value="L">L</option>
+								</select></td>
+							<td class="my-auto"><input style="max-width: 50px;" type="number" ng-model="detail.quantity"
+									step="1" />
+							</td>
+							<td class="my-auto"><a role="button" ng-click="deleteDetail(detail)"><i
 										class="bi bi-x-circle text-danger"></i></a>
 							</td>
 						</tr>
@@ -69,6 +77,14 @@
 		<button ng-click="update()" class="btn btn-secondary">Update</button>
 		<button ng-click="delete(ordForm)" class="btn btn-danger">Delete</button>
 		<button ng-click="reset()" class="btn btn-warning">Reset</button>
+	</div>
+	<div class="mt-5">
+		<div class="form-group col-6">
+			<label class="form-label">Status Filter:</label>
+			<select class="form-control" ng-model="tblStatus">
+				<option ng-repeat="s in statusMap" ng-value="s.key">{{s.value}}</option>
+			</select>
+		</div>
 	</div>
 	<table class="table table-primary table-striped mt-5 text-center">
 		<thead>
@@ -83,13 +99,19 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="order in pager.orders">
+			<tr ng-repeat="order in pager.orders | filter: tblStatus">
 				<td>{{order.id}}</td>
 				<td>{{order.account.username}}</td>
 				<td>{{order.account.phone}}</td>
-				<td>{{order.status}}</td>
+				<td>
+					<span ng-show="order.status == 'queueing'">Chưa xử lý</span>
+					<span ng-show="order.status == 'delivering'">Đang giao</span>
+					<span ng-show="order.status == 'completed'">Hoàn thành</span>
+					<span ng-show="order.status == 'cancelled'">Đã hủy</span>
+				</td>
 				<td>{{totalQty(order)}}</td>
-				<td>{{totalAmount(order) | currency: '' : '.0'}}</td>
+				<td style="text-align: end !important;" class="mx-auto">{{totalAmount(order) | currency: '' : '.0'}}
+				</td>
 				<td><a role="button" ng-click="edit(order)"><i class="bi bi-pencil text-success me-2"></i></a> <a
 						role="button" ng-click="delete(order)"><i class="bi bi-trash3 text-danger"></i></a></td>
 			</tr>

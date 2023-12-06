@@ -85,14 +85,27 @@
 				</h4>
 				<hr>
 				<div class="d-flex align-items-center gap-3">
-					<h5>SIZE:</h5>
-					<div style="width: 35px; height: 35px;" class="border bg-light text-center py-auto">S</div>
-					<div style="width: 35px; height: 35px;" class="border bg-light text-center py-auto">M</div>
-					<div style="width: 35px; height: 35px;" class="border bg-light text-center py-auto">L</div>
+					<div class="my-auto">
+						<h5>SIZE:</h5>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" ng-model="size" name="size" id="sizeS" value="S">
+						<label class="form-check-label" for="sizeS">S</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" ng-model="size" name="size" id="sizeM" value="M">
+						<label class="form-check-label" for="sizeM">M</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" ng-model="size" name="size" id="sizeL" value="L">
+						<label class="form-check-label" for="sizeL">L</label>
+					</div>
 				</div>
 				<div class="d-flex gap-5 my-5 justify-content-center">
-					<a role="button" class="btn btn-light border-success col-4" th:attr="ng-click=@{|add_and_order('${item.id}')|}">MUA HÀNG</a>
-					<button class="btn btn-success col-4" th:attr="ng-click=@{|cart.add('${item.id}')|}">THÊM VÀO GIỎ
+					<a role="button" class="btn btn-light border-success col-4"
+						th:attr="ng-click=@{|add_and_order('${item.id}')|}">MUA HÀNG</a>
+					<button class="btn btn-success col-4" th:attr="ng-click=@{|cart.add('${item.id}')|}">THÊM VÀO
+						GIỎ
 						HÀNG</button>
 				</div>
 				<div>
@@ -150,56 +163,7 @@
 				</div>
 			</div>
 		</div>
-		<hr>
-		<div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
-			<div class="accordion-item">
-				<h2 class="accordion-header" id="reviews">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse"
-						data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-						aria-controls="panelsStayOpen-collapseOne">
-						<h5 class="text-success">ĐÁNH GIÁ SẢN PHẨM</h5>
-					</button>
-				</h2>
-				<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="reviews">
-					<div class="accordion-body">
-						<div class="d-flex gap-3 my-2">
-							<h6 class="text-danger">0/5</h6>
-							<div>
-								<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i class="bi bi-star"></i> <i
-									class="bi bi-star"></i> <i class="bi bi-star"></i>
-							</div>
-							<h6 class="text-danger">(0 đánh giá)</h6>
-						</div>
-						<hr>
-						<div class="text-center mx-auto" style="width: 60%;">
-							<h6 class="text-success">ĐÁNH GIÁ MỨC ĐỘ HÀI LÒNG CỦA BẠN VỀ
-								SẢN PHẨM</h6>
-							<div class="row justify-content-between align-items-center my-4">
-								<div class="border-end col-md-6 d-flex gap-5">
-									<i class="bi bi-person-circle fs-1"></i>
-									<div class="my-auto">
-										<button class="btn btn-success">Đăng nhập</button>
-									</div>
-								</div>
-								<div class="col-md-5 d-flex gap-5">
-									<h4 class="text-danger my-auto">0/5</h4>
-									<div class="fs-4">
-										<i class="bi bi-star"></i> <i class="bi bi-star"></i> <i class="bi bi-star"></i>
-										<i class="bi bi-star"></i> <i class="bi bi-star"></i>
-									</div>
-								</div>
-							</div>
-							<textarea name="comment" id="" style="width: 100%;" rows="5" class="p-3 fs-6"
-								placeholder="Viết bình luận về sản phẩm này"></textarea>
-							<div class="d-flex gap-5 justify-content-center my-4">
-								<button class="btn btn-success col-md-3">Chọn ảnh</button>
-								<button class="btn btn-success col-md-3">Gửi đánh giá</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 	</div>
 </body>
 

@@ -45,6 +45,11 @@ public class StoreController {
 		model.addAttribute("newCollection", collectionService.findAll().get(0));
 		return "store/home";
 	}
+	
+	@GetMapping("/elise/about")
+	public String about() {
+		return "store/about";
+	}
 
 	@GetMapping("/elise/item/{id}")
 	public String detail(Model model, @PathVariable("id") String id) {

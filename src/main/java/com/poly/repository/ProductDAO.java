@@ -25,9 +25,6 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 
 	Page<Product> findByCollection(Collection collection, Pageable page);
 
-	@Query(value = "SELECT o FROM Product o WHERE o.totalSold > 0 ORDER BY o.totalSold DESC")
-	List<Product> findSoldProducts();
-
 	@Query(value = "SELECT o FROM Product o WHERE o.name LIKE :key OR o.type LIKE :key OR o.material LIKE :key "
 			+ "OR o.line LIKE :key OR o.form LIKE :key")
 	Page<Product> findByKeyword(String key, Pageable page);

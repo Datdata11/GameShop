@@ -5,6 +5,7 @@ app.controller("auth-ctrl", function($scope, $http) {
 			$scope.db = resp.data;
 			console.log("Success", resp)
 		}).catch(error => {
+			location.href = "http://localhost:8080/auth/access/denied"
 			console.log("Error", error)
 		})
 	}

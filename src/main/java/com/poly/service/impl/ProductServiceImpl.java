@@ -109,11 +109,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> findSoldProducts() {
-		return dao.findSoldProducts();
-	}
-
-	@Override
 	public Page<Product> findByKeyword(String keyword, Pageable page) {
 		return dao.findByKeyword(keyword, page);
 	}

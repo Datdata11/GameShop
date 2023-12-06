@@ -21,20 +21,10 @@ public class AuthConfig {
 	BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	UserService userService;
-	
-//	@Bean
-//	public DaoAuthenticationProvider authenticationProvider() {
-//	   DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//	       
-//	   authProvider.setUserDetailsService(userService);
-//	   authProvider.setPasswordEncoder(passwordEncoder);
-//	   
-//	   return authProvider;
-//	}
+
 
 	/* Quản lý dữ liệu người sử dụng */
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.authenticationProvider(authenticationProvider());
 		auth.userDetailsService(userService);
 	}
 	

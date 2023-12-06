@@ -47,6 +47,10 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account findByEmail(String email) {
-		return dao.findByEmail(email);
+		Account acc = dao.findByEmail(email);
+		if (acc == null) {
+			throw new RuntimeException("Not existed");
+		}
+		return acc;
 	}
 }

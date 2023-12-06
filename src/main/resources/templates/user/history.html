@@ -10,12 +10,15 @@
 <body>
 	<div class="container mt-5 mx-auto" style="min-height: 200px;">
 		<h3 class="text-center text-success">LỊCH SỬ MUA HÀNG</h3>
-		<div class="card mt-3 w-50 mx-auto" th:each="order : ${orderHistory}" th:object="${order}">
+		<div class="card mt-3 w-60 mx-auto" th:each="order : ${orderHistory}" th:object="${order}">
 			<div class="card-header">Mã đơn hàng: [[*{id}]]</div>
 			<div class="card-body">
 				<div class="card-title d-flex justify-content-between">
 					<h6>Ngày đặt: [[*{orderDate}]]</h6>
-					<h6>Trạng thái: [[*{status}]]</h6>
+					<h6 th:if="*{status} == 'queueing'">Trạng thái: Chưa xử lý</h6>
+					<h6 th:if="*{status} == 'delivering'">Trạng thái: Đang giao</h6>
+					<h6 th:if="*{status} == 'completed'">Trạng thái: Hoàn thành</h6>
+					<h6 th:if="*{status} == 'cancelled'">Trạng thái: Đã hủy</h6>
 				</div>
 				<div class="card-text">
 					<div class="d-flex justify-content-between">
@@ -30,12 +33,14 @@
 						<tr>
 							<th>Mã sản phẩm</th>
 							<th>Tên sản phẩm</th>
+							<th>Kích cỡ</th>
 							<th>Số lượng</th>
 							<th>Thành tiền</th>
 						</tr>
 						<tr th:each="detail : *{details}" th:object="${detail.product}">
 							<td>[[*{id}]]</td>
 							<td>[[*{name}]]</td>
+							<td>[[${detail.size}]]</td>
 							<td>[[${detail.quantity}]]</td>
 							<td>[[${#numbers.formatDecimal(detail.product.price * detail.quantity, 0, 'COMMA', 0, 'POINT')}]] đ</td>
 						</tr>

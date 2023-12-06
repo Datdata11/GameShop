@@ -20,6 +20,7 @@ public class OrderDetail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Integer quantity; // số lượng
+	private String size;
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;

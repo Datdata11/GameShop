@@ -57,10 +57,11 @@
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
 							<li th:if="${#request.isUserInRole('MAN')} or ${#request.isUserInRole('STA')}"><a
-									class="dropdown-item" href="/elise/admin">Administration</a></li>
-							<li><a class="dropdown-item" href="/elise/account/profile">Profile</a></li>
-							<li><a class="dropdown-item" href="/elise/account/order-history">Order histiory</a></li>
-							<li><a class="dropdown-item" href="/elise/account/logoff">Logout</a></li>
+									class="dropdown-item" href="/elise/admin">Trang quản trị</a></li>
+							<li><a class="dropdown-item" href="/elise/account/profile">Thông tin tài khoản</a></li>
+							<li><a class="dropdown-item" href="/elise/account/order-history">Lịch sử mua hàng</a></li>
+							<li><a class="dropdown-item" href="/elise/account/change-password">Thay đổi mật khẩu</a></li>
+							<li><a class="dropdown-item" href="/elise/account/logoff">Đăng xuất</a></li>
 						</ul>
 					</div>
 					<div class="position-relative">
@@ -97,6 +98,9 @@
 										<span class="fst-italic" ng-bind="p.id"></span>
 									</div>
 									<div>
+										<input style="max-width: 50px;" class="text-center" type="text" disabled ng-model="p.size">
+									</div>
+									<div>
 										<input ng-model="p.quantity" ng-change="cart.saveToLocalStorage()"
 											style="max-width: 50px;" type="number" min="1" step="1">
 									</div>
@@ -104,8 +108,6 @@
 										<span ng-bind="p.price * p.quantity | currency : '' : '.0'"></span> đ
 									</div>
 									<div>
-										<button class="btn btn-light border rounded"><i
-												class="bi bi-heart"></i></button>
 										<button class="btn rounded btn-danger" ng-click="cart.remove(p.id)"><i
 												class="bi bi-trash3"></i></button>
 									</div>

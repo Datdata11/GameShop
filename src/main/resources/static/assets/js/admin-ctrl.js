@@ -27,3 +27,11 @@ app.config(function($routeProvider) {
 		})
 		.otherwise({ redirectTo: "/collection" })
 })
+app.run(function($http, $rootScope) {
+	$http.get(`http://localhost:8080/elise/rest/authentication`).then(resp => {
+		if (resp.data) {
+			$auth = $rootScope.$auth = resp.data;
+			$http.defaults.headers.common["Authorization"] = $auth.token;
+		}
+	});
+})

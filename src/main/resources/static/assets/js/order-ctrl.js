@@ -8,6 +8,7 @@ app.controller("ord-ctrl", function($scope, $http) {
         {key: "cancelled", value: "Đã hủy"}
     ]
 	$scope.ordForm = {}
+	$scope.tblStatus = "queueing"
 	// lấy dữ liệu về bảng
 	$scope.initialize = function() {
 		$http.get(host).then(resp => {
